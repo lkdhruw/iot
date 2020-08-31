@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'simple_mail',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +52,16 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
 
 ROOT_URLCONF = 'iot.urls'
 
@@ -81,7 +94,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+SILENCED_SYSTEM_CHECKS = ['mysql.E001']
 
+# https://docs.djangoproject.com/en/dev/ref/settings/#file-upload-max-memory-size
+FILE_UPLOAD_MAX_MEMORY_SIZE = 26214400
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -107,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -120,3 +136,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Email settings
+DEFAULT_FROM_EMAIL = 'admin@mail.lkdhruw'
+SERVER_EMAIL = 'admin@hmail.lkdhruw'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+# https://pypi.org/project/django-simple-mail/
+EMAIL_HOST = 'mail.lkdhruw'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'adminy@mail.lkdhruw'
+EMAIL_HOST_PASSWORD = '@kgp6103'
+
+SIMPLE_MAIL_USE_MODELTRANSALTION = False
+SIMPLE_MAIL_USE_CKEDITOR = True
+SIMPLE_MAIL_DEFAULT_TEMPLATE = 'simple_mail/default.html'
+SIMPLE_MAIL_LOG_CSS_WARNING = False
+SIMPLE_MAIL_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
